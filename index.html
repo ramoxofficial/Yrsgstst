@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سایت فروشگاهی</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f0f0; text-align: center; }
+        header { background: #fff; padding: 10px; }
+        .logo { max-width: 150px; margin: 20px 0; }
+        .container { background: #d0d0d0; border-radius: 15px; padding: 20px; display: inline-block; }
+        .plan { border: 1px solid #ddd; padding: 20px; margin: 10px; width: 250px; display: inline-block; border-radius: 10px; background: #fff; cursor: pointer; }
+        .plan:hover { box-shadow: 0 0 10px rgba(0,0,0,0.2); }
+        h2 { margin-top: 20px; }
+        .form-container, .auth-container, .admin-container { display: none; margin-top: 20px; }
+        .input-group { margin: 10px 0; }
+        .input-group label { display: block; text-align: left; margin-bottom: 5px; }
+        .input-group input { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
+        .submit-btn, .auth-btn { padding: 10px 20px; border: none; border-radius: 5px; background-color: #4CAF50; color: white; cursor: pointer; }
+        .submit-btn:hover, .auth-btn:hover { background-color: #45a049; }
+        .upload-container { display: none; margin-top: 20px; }
+        .complete-btn { padding: 10px 20px; border: none; border-radius: 5px; background-color: #007BFF; color: white; cursor: pointer; margin-top: 10px; }
+        .complete-btn:hover { background-color: #0056b3; }
+        .message { margin-top: 20px; color: #d9534f; }
+        .order-list { margin-top: 20px; text-align: left; }
+    </style>
+</head>
+<body>
+    <header>
+        <img class="logo" src="https://digifycdn.com/media/item_images/IMG_20241008_134525_490.png?x-img=v1/optimize,q_95/resize,h_500,w_500,force_true" alt="لوگو">
+    </header>
+    
+    <div class="container">
+        <h2>خرید سایت</h2>
+
+        <div class="plans">
+            <div class="plan" onclick="showForm('پلن معمولی')">
+                <h3>پلن معمولی</h3>
+                <p>سالانه: 1,000,000 تومان</p>
+            </div>
+            <div class="plan" onclick="showForm('پلن پیشرفته')">
+                <h3>پلن پیشرفته</h3>
+                <p>سالانه: 2,500,000 تومان</p>
+            </div>
+            <div class="plan" onclick="showForm('پلن حرفه‌ای')">
+                <h3>پلن حرفه‌ای</h3>
+                <p>سالانه: 4,000,000 تومان</p>
+            </div>
+        </div>
+
+        <div class="auth-container" id="authContainer">
+            <h2>ورود / ثبت نام</h2>
+            <div>
+                <button class="auth-btn" onclick="showRegister()">ثبت نام</button>
+                <button class="auth-btn" onclick="showLogin()">ورود</button>
+                <button class="auth-btn" onclick="showAdminLogin()">ورود ادمین</button>
+            </div>
+        </div>
+
+        <div class="form-container" id="formContainer">
+            <h2>اطلاعات شخصی</h2>
+            <div class="input-group">
+                <label for="name">نام و نام خانوادگی:</label>
+                <input type="text" id="name" placeholder="نام و نام خانوادگی خود را وارد کنید">
+            </div>
+            <div class="input-group">
+                <label for="phone">شماره تلفن:</label>
+                <input type="tel" id="phone" placeholder="شماره تلفن خود را وارد کنید">
+            </div>
+            <div class="input-group">
+                <label for="additionalPhone">شماره تلفن اضافی:</label>
+                <input type="tel" id="additionalPhone" placeholder="شماره تلفن اضافی خود را وارد کنید">
+            </div>
+            <button class="submit-btn" onclick="showUpload()">تکمیل اطلاعات</button>
+        </div>
+
+        <div class="upload-container" id="uploadContainer">
+            <h2>آپلود رسید خرید</h2>
+            <input type="file" id="receiptUpload" accept="image/*">
+            <p>شماره کارت جهت ارسال پول: 5859 8312 2900 4451</p>
+            <button class="complete-btn" onclick="completePurchase()">تکمیل خرید</button>
+            <div class="message" id="purchaseMessage" style="display:none;"></div>
+        </div>
+
+        <div class="registration-container" id="registrationContainer" style="display:none;">
+            <h2>ثبت نام</h2>
+            <div class="input-group">
+                <label for="regEmail">ایمیل:</label>
+                <input type="email" id="regEmail" placeholder="ایمیل خود را وارد کنید">
+            </div>
+            <div class="input-group">
+                <label for="regPassword">رمز عبور:</label>
+                <input type="password" id="regPassword" placeholder="رمز عبور خود را وارد کنید" minlength="8" required>
+            </div>
+            <button class="submit-btn" onclick="register()">ثبت نام</button>
+            <div class="message" id="regMessage" style="display:none;"></div>
+        </div>
+
+        <div class="login-container" id="loginContainer" style="display:none;">
+            <h2>ورود</h2>
+            <div class="input-group">
+                <label for="loginEmail">ایمیل:</label>
+                <input type="email" id="loginEmail" placeholder="ایمیل خود را وارد کنید">
+            </div>
+            <div class="input-group">
+                <label for="loginPassword">رمز عبور:</label>
+                <input type="password" id="loginPassword" placeholder="رمز عبور خود را وارد کنید">
+            </div>
+            <button class="submit-btn" onclick="login()">ورود</button>
+            <div class="message" id="loginMessage" style="display:none;"></div>
+        </div>
+
+        <div class="admin-container" id="adminContainer" style="display:none;">
+            <h2>مدیریت سفارش‌ها</h2>
+            <div class="order-list">
+                <h3>سفارش‌های کاربران:</h3>
+                <ul id="orderList">
+                    <li>سفارش 1: نام کاربر، ایمیل، شماره تلفن</li>
+                    <li>سفارش 2: نام کاربر، ایمیل، شماره تلفن</li>
+                    <!-- اینجا می‌توانید اطلاعات واقعی را اضافه کنید -->
+                </ul>
+            </div>
+            <div class="message" id="adminMessage" style="display:none;"></div>
+        </div>
+    </div>
+
+    <script>
+        function showForm(plan) {
+            document.getElementById('formContainer').style.display = 'block';
+            document.getElementById('uploadContainer').style.display = 'none'; // Hide upload container initially
+            document.getElementById('authContainer').style.display = 'none'; // Hide auth container
+            console.log('پلن انتخاب شده:', plan);
+        }
+
+        function showUpload() {
+            document.getElementById('uploadContainer').style.display = 'block';
+        }
+
+        function completePurchase() {
+            document.getElementById('purchaseMessage').innerText = "خرید شما ثبت شد و در انتظار تایید ادمین می‌باشد.";
+            document.getElementById('purchaseMessage').style.display = 'block';
+        }
+
+        function showRegister() {
+            document.getElementById('registrationContainer').style.display = 'block';
+            document.getElementById('loginContainer').style.display = 'none'; // Hide login container
+            document.getElementById('authContainer').style.display = 'none'; // Hide auth container
+        }
+
+        function showLogin() {
+            document.getElementById('loginContainer').style.display = 'block';
+            document.getElementById('registrationContainer').style.display = 'none'; // Hide registration container
+            document.getElementById('authContainer').style.display = 'none'; // Hide auth container
